@@ -1,0 +1,3 @@
+v-bind : é o bind para uma unica direção, do javascript para o html
+v-on : pega um evento que aconteceu no html e pode atualizar a instancia javascript
+v-model : uma mão dupla, tanto atualiza o html pelo javascript ou o javascript pelo html

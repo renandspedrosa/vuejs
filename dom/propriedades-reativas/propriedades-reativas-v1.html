@@ -1,0 +1,15 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<div id="app">
+    <p>{{titulo}}</p>
+    <input type="text" v-on:input="titulo = $event.target.value" v-bind:value="titulo"><!-- to way  binding -->
+    <input type="text" v-model="titulo"><!--  o mesmo que o de cima-->
+</div>
+
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            titulo:'Usando Vue js'
+        }
+    })
+</script>

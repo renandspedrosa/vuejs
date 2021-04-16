@@ -1,0 +1,22 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<div id="app">
+    <p v-once>{{titulo}}</p><!-- v-once serve para nao alterar o valor conforme atualizado o dado titulo-->
+    <p>{{saudacao()}}</p>
+    <p><a v-bind:href="link">Google</a></p> <!-- v-bind serve para referenciar o atributo html -->
+</div>
+
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            titulo:'Usando Vue js',
+            link:'http://google.com.br'
+        },
+        methods:{
+            saudacao:function(){
+                this.titulo = 'Bom dia!'
+                return this.titulo
+            }
+        }
+    })
+</script>

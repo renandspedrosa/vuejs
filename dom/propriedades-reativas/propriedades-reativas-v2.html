@@ -1,0 +1,38 @@
+<script src="https://unpkg.com/vue"></script>
+<div id="app">
+    <button v-on:click="aumentar">Aumentar</button>
+    <button v-on:click="contador2++">Aumentar 2</button>
+    <button v-on:click="diminuir">Diminuir</button>
+    <p>Contador : {{contador}} | {{contador2}}</p>
+    <p>Resultado : {{resultado}}</p><!-- propriedades computadas sao chamadas por atributos e nao métodos 
+                                        a diferença da computada é que ele mantem um cache e se nao ter alteracao no resultado ele nao chama a funcao, ja em methods chama-->
+</div>
+
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            contador:0,
+            contador2:0,
+        },
+        computed:{
+            resultado(){
+                return  this.contador >= 5 ? 'Maior ou igual 5':'Menor ou igual a 5'
+            }
+        },
+        watch:{
+            contador(novo, antigo){
+                console.log(novo,antigo)
+            }
+        },
+        methods:{
+            aumentar(){
+                this.contador++
+            },
+            diminuir(){
+                this.contador--
+            },
+        }
+
+    })
+</script>

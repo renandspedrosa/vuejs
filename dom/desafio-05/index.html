@@ -1,24 +1,22 @@
-<script src="https://unpkg.com/vue"></script>
-<script src="app.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <div id="desafio">
   <!-- 1) Ligue o botão para alternar a exibição dos dois
     parágrafos. Use ambos v-if e v-show e inspecione os elementos
     para ver a diferença -->
   <h2>#01</h2>
   <div>
-    <button>Alternar</button>
-    <p>Você quer me ver ...</p>
-    <p>...ou eu</p>
-    <p>Você quer me ver ...</p>
-    <p>...ou eu</p>
+    <button @click="visualizar=!visualizar">alterar</button>
+    <p v-if="visualizar">Você quer me ver ...</p>
+    <p v-else>...ou eu</p>
+    <p v-show="visualizar">Você quer me ver ...</p>
+    <p v-show="!visualizar">...ou eu</p>
   </div>
 
   <!-- 2) Exiba em uma <ul> um array de elementos da sua escolha.
     Imprima também o índice de cada elemento. -->
   <h2>#02</h2>
   <ul>
-    <li></li>
+    <li v-for="(valor,index) in array"> {{index}} - {{valor}}</li>
   </ul>
   
   <!-- 3) Imprimir todos os pares de valor-chave do objeto a seguir:
@@ -30,7 +28,7 @@
     Imprima também o índice de cada item. -->
   <h2>#03</h2>
   <ul>
-    <li></li>
+    <li v-for="(valor, chave, i) in livro">{{i}} - {{chave}}:{{valor}}</li>
   </ul>
   
   <!-- 4) Imprima o seguinte objeto (somente os valores) e
@@ -43,8 +41,19 @@
     (dica: use v-for e v-if na resolução) -->
   <h2>#04</h2>
   <ul>
-    <li>
-    
+    <li v-for="valor in aluno">
+      <template v-if="Array.isArray(valor)">
+          notas:
+          <ul>
+            <li v-for="nota in valor">
+                {{nota}}
+            </li>
+          </ul>
+      </template>
+      <template v-else>
+        {{valor}}
+      </template>
     </li>
   </ul>
 </div>
+<script src="app.js"></script>

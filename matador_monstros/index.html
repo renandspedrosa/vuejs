@@ -15,12 +15,12 @@
         width: 100%;
         box-shadow: 0px 0px 8px -4px black;
         display: flex;
-        margin-bottom: 10px;
+        flex-wrap: wrap;
         justify-content: center;
+        margin-top: 10px;
     }
     .jogadores{
-        /* border: 1px solid black; */
-        width: 100%;
+        width: 50%;
         padding: 28px;
         text-align: center;
     }
@@ -39,6 +39,17 @@
         font-size: 9px!important;
         font-family: arial!important;
     }
+    ul>li{
+        list-style: none;
+        text-align: center;
+        margin: 5px;
+        border-radius: 3px;
+        color: black;
+
+    }
+    ul{
+        width: 100%;
+    }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
@@ -49,28 +60,38 @@
             <div  class="jogadores">
                 Jogador
                 <div class="barra">
-                    <div  class="progresso" :style="[{backgroundColor:barra_cor_jogador},{width:jogador_vida+'%'}]"></div>
+                    <div  class="progresso" :style="[{backgroundColor:verifica_jogador},{width:jogador_vida+'%'}]"></div>
                 </div>
                 {{jogador_vida}}%
             </div>
             <div class="jogadores">
                 Monstro     
                 <div class="barra">
-                    <div class="progresso" :style="[{backgroundColor:barra_cor_monstro},{width:monstro_vida+'%'}]"></div>
+                    <div class="progresso" :style="[{backgroundColor:verifica_monstro},{width:monstro_vida+'%'}]"></div>
                 </div>
                 {{monstro_vida}}%
+            </div>
+            <div style="margin-bottom: 10px;" :style="[{color}]">
+                {{resultado}}
             </div>
         </div>
         <div class="borda">
             <div class="botoes" v-if="iniciar_jogo" >
-                <button  class="btn btn-primary" @click="iniciar_jogo=!iniciar_jogo">INICIAR NOVO JOGO </button>
+                <button  class="btn btn-primary" @click="comecar">INICIAR NOVO JOGO </button>
             </div>
             <div class="botoes" v-else >
-                <button class="btn btn-danger">ATAQUE </button>
+                <button class="btn btn-danger" @click="atacar">ATAQUE </button>
                 <button class="btn btn-warning">ATAQUE ESPECIAL</button>
                 <button class="btn btn-success">CURAR</button>
-                <button class="btn btn-secondary" @click="finalizar_jogo">DESISTIR</button>
+                <button class="btn btn-secondary" @click="iniciar_jogo=!iniciar_jogo">DESISTIR</button>
             </div>
+        </div>
+        <div class="borda" style="padding: 10px;">
+            <ul>    
+                <li v-for="(jogadores,nome) in objeto_log">{{jogadores[0]}} atingiu Jogador com {{jogadores[1]}}</li>
+                <!-- <li style="background-color: rgb(113, 113, 243);">Monstro Atingiu Jogador com 12</li> -->
+                <!-- <li style="background-color: rgb(231, 90, 90);">Jogar atingiu monstro  com 10</li> -->
+            </ul>
         </div>
     </div>
 </body>
@@ -79,21 +100,55 @@
         el:'#App',
         data:{
             jogador_vida:100,
-            barra_cor_jogador:'green',
+            barra_cor_jogador:'',
 
             monstro_vida:100,
-            barra_cor_monstro:'green',
+            barra_cor_monstro:'',
 
-            iniciar_jogo:true
-
+            iniciar_jogo:true,
+            color:'',
+            objeto_log : []
+        },
+        computed:{
+            verifica_jogador(){
+                return this.jogador_vida<20 ? 'red': 'green'
+            },
+            verifica_monstro(){
+                return this.monstro_vida<20 ? 'red': 'green'
+            },
+            resultado(){
+                if(this.jogador_vida== 0 || this.monstro_vida== 0){
+                    if(this.jogador_vida== 0){
+                        this.color = 'red'
+                        this.iniciar_jogo=!this.iniciar_jogo
+                        return 'Você Perdeu! :('
+                    }
+                    if(this.monstro_vida == 0){
+                        this.color = 'green'
+                        this.iniciar_jogo=!this.iniciar_jogo
+                        return 'Você Ganhou!'
+                    }
+                }
+            }
         },
         methods:{
-            finalizar_jogo(){
+            atacar(){
+                if(this.jogador_vida>0 &&  this.monstro_vida>0){
+                    this.jogador_vida = this.jogador_vida - 10<0 ? 0:this.jogador_vida - 10
+                    this.monstro_vida = this.monstro_vida - 7<0 ? 0:this.monstro_vida - 7
+                    this.adicionar_log()
+                }
+
+            },
+            comecar(){
                 this.jogador_vida = 100,
-                this.barra_cor_jogador = 'green',
                 this.monstro_vida = 100,
-                this.barra_cor_monstro = 'green',
                 this.iniciar_jogo=!this.iniciar_jogo
+                this.objeto_log = []
+            },
+            adicionar_log(){
+                this.objeto_log.push(['jogador',7])
+                this.objeto_log.push(['monstro',10])
             }
         }
     })

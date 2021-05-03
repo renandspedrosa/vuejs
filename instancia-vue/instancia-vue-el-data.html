@@ -1,0 +1,19 @@
+<meta charset="UTF-8">
+<script src="https://unpkg.com/vue"></script>
+<div id="app">
+    {{titulo}}
+    <button @click="alterar">alterar</button>
+</div>
+<script>
+const vm = new Vue({
+    el:'#app',
+    data:{
+        titulo:'titulo'
+    },
+    methods:{
+        alterar(){
+            this.titulo +='!'
+        }
+    }
+})
+</script>

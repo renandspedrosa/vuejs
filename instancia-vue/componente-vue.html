@@ -2,12 +2,14 @@
 <script src="https://unpkg.com/vue"></script>
 
 <div id="app">
-
+    <comp></comp>
+    <comp></comp>
+    <comp></comp>
+    <!-- <div class="comp"></div> -->
 </div>
 
 <script>
-    const vm = new Vue({
-        // el:'#app',
+    Vue.component('comp',{
         template:`
                     <div>
                         <h2>{{aula}}</h2>
@@ -16,9 +18,12 @@
                         <button @click="alteraModulo">Altera Modulo</button>
                     </div>
         `,
-        data:{
-            aula:'Montando Instancia Vue',
-            modulo:'Instancia Vue'
+        data: function(){
+
+            return {
+                aula:'Montando Instancia Vue',
+                modulo:'Instancia Vue'
+            }
         },
         methods:{
             alteraAula(){
@@ -28,9 +33,12 @@
                 this.modulo += '#'
             }
         }
+
     })
-    // vm.$mount('#app')
-    // codigo puro vc monta a vm antes e depois inserie o $el (html) no elemento
-    vm.$mount()
-    document.querySelector('#app').appendChild(vm.$el)
+    const vm = new Vue({
+        // el:'comp',
+        // el:'.comp',
+        el:'#app',
+    })
+
 </script>

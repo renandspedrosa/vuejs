@@ -1,5 +1,5 @@
 <template>
-  <div i    d="app">
+  <div id="app">
     <h1>Contadores</h1>
     <!-- {{contador}} -->
     <app-contadores/>
